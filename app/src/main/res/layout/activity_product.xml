@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".ProductActivity">
+
+    <!-- Título de la pantalla -->
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Productos"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/createProductButton"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Botón de Crear Producto -->
+    <Button
+        android:id="@+id/createProductButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crear Producto"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:background="#4CAF50"
+        android:textColor="#ffffff"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"/>
+
+    <!-- Scroll Horizontal para la tabla -->
+
+    <!-- Botón de Cerrar Sesión -->
+    <HorizontalScrollView
+        android:id="@+id/productScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:background="#f0f0f0"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/logoutButton"
+        app:layout_constraintTop_toBottomOf="@id/createProductButton"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="27dp">
+
+        <TableLayout
+            android:id="@+id/productTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:stretchColumns="1">
+
+            <!-- Cabeceras de la tabla -->
+            <TableRow
+                android:background="@android:color/darker_gray"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Nombre"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="ID"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Código"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Categorías"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Acción"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <!-- Ejemplo de un producto en la tabla -->
+            <TableRow
+                android:background="@android:color/white"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Producto Ejemplo"
+                    android:textColor="#333333" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="12345"
+                    android:textColor="#333333" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="PROD001"
+                    android:textColor="#333333" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Electrónica, Móviles"
+                    android:textColor="#333333" />
+                <!-- Botón Eliminar -->
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="#FF5722"
+                    android:text="Eliminar" <!-- Rojo para Eliminar -->
+                android:textColor="#ffffff"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"/>
+            </TableRow>
+        </TableLayout>
+    </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerrar Sesión"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="32dp"
+        android:background="#FF5722"
+        android:textColor="#ffffff"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
