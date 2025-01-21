@@ -25,14 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:hint="Username"
+            android:hint="Email"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="20sp"
             android:padding="15dp"
             android:background="@drawable/rounded_corner"
             android:inputType="text"
-            android:id="@+id/Username_import"/>
+            android:id="@+id/email_input"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -45,7 +45,7 @@
             android:padding="15dp"
             android:background="@drawable/rounded_corner"
             android:inputType="textPassword"
-            android:id="@+id/Password_import"/>
+            android:id="@+id/password_input"/>
 
         <Button
             android:layout_width="match_parent"
