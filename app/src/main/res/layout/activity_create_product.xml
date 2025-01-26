@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/table_background">
+
+
+    <EditText
+        android:id="@+id/etCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Código del producto" />
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre del producto" />
+
+    <EditText
+        android:id="@+id/etCharacteristic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Características del producto" />
+
+    <EditText
+        android:id="@+id/etQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cantidad" />
+
+    <EditText
+        android:id="@+id/etPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Precio" />
+
+    <Button
+        android:id="@+id/btnCreateProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Crear producto"
+        android:backgroundTint="@color/white"
+        android:textColor="#7D0D90"/>
+
+
+</LinearLayout>

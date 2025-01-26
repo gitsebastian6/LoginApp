@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">LoginApp</string>
+    <string name="productos">Productos</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="agregar">Agregar</string>
 </resources>

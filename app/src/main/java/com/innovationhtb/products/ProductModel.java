@@ -4,57 +4,43 @@ import java.util.List;
 
 public class ProductModel {
     private String id;
-    private String code;
     private String name;
     private String characteristic;
-    private int quantity;
-    private List<Price> prices;
+    private List<ProductModel.Price> prices;
 
-    // Constructor
-    public ProductModel(String id, String code, String name, String characteristic, int quantity, List<Price> prices) {
+    public ProductModel(String id, String name, String characteristic, List<ProductModel.Price> price) {
         this.id = id;
-        this.code = code;
         this.name = name;
         this.characteristic = characteristic;
-        this.quantity = quantity;
-        this.prices = prices;
+        this.prices = price;
     }
 
-    // Getters
     public String getId() {
         return id;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public String getName() {
         return name;
     }
 
+    public List<ProductModel.Price> getPrice() {
+        return prices;
+    }
+
     public String getCharacteristic() {
         return characteristic;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public void setCharacteristic(String characteristic) {
+        this.characteristic = characteristic;
     }
-
-    public List<Price> getPrices() {
-        return prices;
-    }
-
-    // Clase interna para manejar precios
-    public static class Price {
-        private double value;
-
-        public Price(double value) {
+    static class Price {
+        private String value;
+        private String description;
+        public Price(String value, String description) {
             this.value = value;
-        }
-
-        public double getValue() {
-            return value;
+            this.description = description;
         }
     }
+
 }

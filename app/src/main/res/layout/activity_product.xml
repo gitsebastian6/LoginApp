@@ -1,11 +1,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#901A1A">
+    android:background="@drawable/login_backgroud">
 
     <LinearLayout
         android:id="@+id/buttonContainer"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -20,25 +22,17 @@
         <!-- Botón Agregar -->
         <Button
             android:id="@+id/buttonAddProduct"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:backgroundTint="#4CAF50"
-            android:text="Agregar"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            android:backgroundTint="#FFFFFF"
+            android:text="Agregar Producto"
+            android:textColor="#7D0D90"
+            android:textStyle="bold"
+            tools:ignore="VisualLintButtonSize" />
 
-        <!-- Botón Eliminar -->
-        <Button
-            android:id="@+id/buttonDeleteProduct"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#F44336"
-            android:text="Eliminar"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
     </LinearLayout>
 
     <TextView
@@ -48,7 +42,7 @@
         android:layout_marginTop="100dp"
         android:gravity="center"
         android:text="Productos"
-        android:textColor="#500303"
+        android:textColor="#FFFFFF"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,8 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Explora nuestra nueva colección de productos."
-        android:textColor="#FB9A9A"
+        android:text="Crea productos a tu gusto"
+        android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +68,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:background="#F0D4D4"
+        android:background="#9ECDE2"
         android:elevation="4dp"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"

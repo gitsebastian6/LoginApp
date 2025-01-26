@@ -1,11 +1,13 @@
 package com.innovationhtb.products;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
-import androidx.annotation.Nullable;
+
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,113 +15,84 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.innovationhtb.loginapp.ApiService;
 import com.innovationhtb.loginapp.R;
 import com.innovationhtb.loginapp.RetrofitClient;
+import com.innovationhtb.products.models.Product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
-public class ProductActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerViewProducts;
+public class ProductActivity  extends AppCompatActivity {
+    private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-        // Referencias a los elementos del layout
-        recyclerViewProducts = findViewById(R.id.recyclerViewProducts);
-        recyclerViewProducts.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = findViewById(R.id.recyclerViewProducts);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Button btnAddProduct = findViewById(R.id.buttonAddProduct);
 
-        // Referencia al botón Agregar
-        Button buttonAddProduct = findViewById(R.id.buttonAddProduct);
-        buttonAddProduct.setOnClickListener(v -> addProduct());
-
-        // Llamar a la API para obtener productos existentes
-        fetchProductsFromBackend();
-    }
-
-    private void fetchProductsFromBackend() {
-        ApiService productService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        Call<List<ProductModel>> call = productService.getAllProducts();
-
-        call.enqueue(new Callback<List<ProductModel>>() {
-            @Override
-            public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<ProductModel> products = response.body();
-                    productAdapter = new ProductAdapter(products);
-                    recyclerViewProducts.setAdapter(productAdapter);
-                } else {
-                    Toast.makeText(ProductActivity.this, "Error al obtener productos", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<ProductModel>> call, Throwable t) {
-                Toast.makeText(ProductActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+        btnAddProduct.setOnClickListener(v -> {
+            Intent intent = new Intent(ProductActivity.this, CreateProductActivity.class);
+            startActivity(intent);
         });
+
+        fetchProducts();
+    }
+    private void openCreateProductActivity() {
+        Intent intent = new Intent(this, CreateProductActivity.class);
+        createProductLauncher.launch(intent);
     }
 
-    private void addProduct() {
-        // Obtener los datos desde los EditTexts
-        EditText editTextProductName = findViewById(R.id.editTextProductName);
-        EditText editTextProductDescription = findViewById(R.id.editTextProductDescription);
-        EditText editTextProductPrice = findViewById(R.id.editTextProductPrice);
-        EditText editTextProductCompany = findViewById(R.id.editTextProductCompany);
-        EditText editTextProductCode = findViewById(R.id.editTextProductCode);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        String name = editTextProductName.getText().toString().trim();
-        String description = editTextProductDescription.getText().toString().trim();
-        String priceString = editTextProductPrice.getText().toString().trim();
-        String company = editTextProductCompany.getText().toString().trim();
-        String code = editTextProductCode.getText().toString().trim();
-
-        // Validar que los campos no estén vacíos
-        if (name.isEmpty() || description.isEmpty() || priceString.isEmpty() || company.isEmpty() || code.isEmpty()) {
-            Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
-            return;
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            fetchProducts();
         }
-
-        // Convertir el precio de String a double
-        double price = Double.parseDouble(priceString);
-
-        // Crear una lista de precios (solo un precio en este ejemplo)
-        ProductModel.Price productPrice = new ProductModel.Price(price);
-        List<ProductModel.Price> priceList = new ArrayList<>();
-        priceList.add(productPrice);
-
-        // Crear el objeto ProductModel con los datos ingresados
-        ProductModel newProduct = new ProductModel("0", code, name, description, 10, priceList);
-
-        // Llamar a la API para agregar el producto
-        addProductToBackend(newProduct);
     }
+    public final ActivityResultLauncher<Intent> createProductLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    fetchProducts();
+                }
+            });
 
-    private void addProductToBackend(ProductModel product) {
-        ApiService productService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        Call<Void> call = productService.createProduct(product);
-
-        call.enqueue(new Callback<Void>() {
+    private void fetchProducts() {
+        ApiService apiService = RetrofitClient.getApiService();
+        retrofit2.Call<List<Product>> call = apiService.getProducts();
+        call.enqueue(new Callback<List<Product>>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(retrofit2.Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(ProductActivity.this, "Producto creado exitosamente", Toast.LENGTH_SHORT).show();
-                    fetchProductsFromBackend();  // Actualizar la lista de productos después de agregar uno nuevo
+                    List<Product> productList = response.body();
+
+                    runOnUiThread(() -> {
+                        productAdapter = new ProductAdapter(ProductActivity.this, productList);
+                        recyclerView.setAdapter(productAdapter);
+                    });
                 } else {
-                    Toast.makeText(ProductActivity.this, "Error al crear el producto", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> {
+                        Toast.makeText(ProductActivity.this, "Error al cargar productos", Toast.LENGTH_SHORT).show();
+                    });
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(ProductActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(retrofit2.Call<List<Product>> call, Throwable t) {
+                runOnUiThread(() -> {
+                    Toast.makeText(ProductActivity.this, "Error al cargar productos", Toast.LENGTH_SHORT).show();
+                    Log.e("ProductError", t.getMessage(), t);
+                });
             }
+
+
+
         });
     }
+
 }
