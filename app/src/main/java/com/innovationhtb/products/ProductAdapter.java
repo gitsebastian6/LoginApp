@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.innovationhtb.loginapp.ApiService;
 import com.innovationhtb.loginapp.R;
 import com.innovationhtb.loginapp.RetrofitClient;
+import com.innovationhtb.products.models.Category;
 import com.innovationhtb.products.models.Price;
 import com.innovationhtb.products.models.Product;
 
@@ -47,13 +48,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Product product = productList.get(position);
         holder.productName.setText(product.getName());
         holder.productDescription.setText(product.getCharacteristic());
-        //holder.productQuantity.setText(product.getQuantity());
-        //holder.productCode.setText(product.getCode());
+        holder.productQuantity.setText(String.valueOf(product.getQuantity()));
+        String categories = "";
+        for (Category category : product.getCategories()
+        )  {
+            categories += category.getDescription()+ " "; // Concatenar las descripciones de las categorías
+        }
+        holder.productCategory.setText(categories);
+        holder.productCode.setText(product.getCode());
         String prices="";
         for (Price price:product.getPrices()
              ) {
             prices+=price.getCurrency().getDescription()+" "+price.getValue()+" ";
-
         }
         holder.productPrice.setText(prices);
         holder.productImage.setImageResource(R.drawable.cellicon);
@@ -97,18 +103,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView productName, productDescription, productPrice, productQuantity, productCode;
+        TextView productName, productDescription, productPrice, productQuantity, productCode, productCategory;
         ImageView productImage, deleteButton;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.textViewProductName);
             productDescription = itemView.findViewById(R.id.textViewProductDescription);
-            //productQuantity = itemView.findViewById(R.id.textViewProductQuantity);
-           // productCode = itemView.findViewById(R.id.textViewProductCode);
+            productQuantity = itemView.findViewById(R.id.textViewProductQuantity);
+            productCode = itemView.findViewById(R.id.textViewProductCode);
             productPrice = itemView.findViewById(R.id.textViewProductPrice);
+            productCategory =itemView.findViewById(R.id.textViewProductCategory);
             productImage = itemView.findViewById(R.id.imageViewProduct);
-            deleteButton = itemView.findViewById(R.id.deleteButton);  // Referencia al botón eliminar
+            deleteButton = itemView.findViewById(R.id.deleteButton);
         }
     }
 }

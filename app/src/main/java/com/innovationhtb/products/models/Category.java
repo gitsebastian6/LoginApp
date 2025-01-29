@@ -1,9 +1,10 @@
 package com.innovationhtb.products.models;
+
 public class Category {
     private String id;
     private String description;
 
-    // Getters and setters
+    // Getters y setters
     public String getId() {
         return id;
     }

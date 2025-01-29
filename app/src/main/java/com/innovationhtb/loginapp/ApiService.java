@@ -21,11 +21,13 @@ public interface ApiService {
     @GET("products/")
     Call<List<Product>> getProducts();
 
+
     @POST("products/")
     Call<Void> createProduct(@Body ProductRequest productRequest);
 
-    @PATCH("products/")
-    Call<Void> editProduct(@Body ProductRequest productRequest);
+
+    //@PATCH("products/")
+    //Call<Void> editProduct(@Body ProductRequest productRequest);
     @DELETE("products/{id}")
     Call<Void> deleteProduct(@Path("id") String productId);
 

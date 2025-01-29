@@ -30,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.password_input);
         loginBtn = findViewById(R.id.Login_btn);
 
-        Intent intent = new Intent(MainActivity.this, ProductActivity.class);
-        startActivity(intent);
-        finish();
+        //Intent intent = new Intent(MainActivity.this, ProductActivity.class);
+        //startActivity(intent);
+        //finish();
+
         loginBtn.setOnClickListener(v -> {
             String email = emailInput.getText().toString().trim();
             String password = passwordInput.getText().toString().trim();
